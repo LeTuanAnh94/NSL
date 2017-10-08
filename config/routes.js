@@ -32,10 +32,32 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
-  '/': {
-    view: 'homepage'
-  }
+  '/': 'HomeController.index',
+  // AUTHENTICATION
+  '/logout': 'AuthController.logout',
 
+  '/login/facebook':'AuthController.facebook',
+
+  '/login/facebook/callback':'AuthController.facebook',
+
+  '/login/google':'AuthController.google',
+
+  '/login/google/callback':'AuthController.google',
+
+  'POST /login/local': 'AuthController.local',
+
+
+  //User
+  'POST /user/register': 'UserController.registerUser',
+  '/verify':'UserController.verifyUser',
+  'POST /user/myprofile': 'UserController.myprofile',
+
+  'POST /user/edit': 'UserController.edit',
+
+  'POST /user/submit-approve-teacher': 'UserController.submitApproveTeacher',
+  //
+  'POST /user/registerTeacher': 'UserController.registerTeacher',
+  '/verifyTeacher':'UserController.verifyTeacher',
   /***************************************************************************
   *                                                                          *
   * Custom routes here...                                                    *
