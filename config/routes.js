@@ -33,6 +33,7 @@ module.exports.routes = {
   ***************************************************************************/
 
   '/': 'HomeController.index',
+  '/profile': 'HomeController.profile',
   // AUTHENTICATION
   '/logout': 'AuthController.logout',
 
@@ -46,7 +47,9 @@ module.exports.routes = {
 
   'POST /login/local': 'AuthController.local',
 
+// TEACHER
 
+  '/repository': 'HomeController.repository',
   //User
   'POST /user/register': 'UserController.registerUser',
   '/verify':'UserController.verifyUser',
@@ -58,6 +61,40 @@ module.exports.routes = {
   //
   'POST /user/registerTeacher': 'UserController.registerTeacher',
   '/verifyTeacher':'UserController.verifyTeacher',
+
+  //ADMIN
+  '/admin': 'HomeController.admin',
+
+  '/admin/approve-teacher': 'HomeController.approveTeacher',
+
+  '/admin/category': 'HomeController.category',
+
+  '/admin/level': 'HomeController.level',
+
+//ADMIN
+  '/admin': 'HomeController.admin',
+
+  '/admin/approve-teacher': 'HomeController.approveTeacher',
+
+  '/admin/category': 'HomeController.category',
+
+  '/admin/level': 'HomeController.level',
+
+  'POST /admin/list-teacher': 'UserController.listTeacher',
+
+  'POST /admin/update-acount-to-teacher-role':'UserController.updateAcountToTeacherRole',
+
+  'POST /admin/reject-acount-to-teacher-role':'UserController.rejectAcountToTeacherRole',
+
+  'POST /list-simple-category':'CategoryController.listSimpleCategory',
+
+  'POST /add-category':'CategoryController.addCategory',
+
+
+
+  'POST /list-simple-level':'LevelController.listSimpleLevel',
+
+  'POST /add-level':'LevelController.addLevel',
   /***************************************************************************
   *                                                                          *
   * Custom routes here...                                                    *

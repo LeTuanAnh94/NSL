@@ -27,10 +27,13 @@ module.exports.policies = {
   ***************************************************************************/
 
   '*': true,
-  'AdminController': {
-    '*': 'isAuthenticated'
-  },
+  'HomeController': {
+    'index': 'sessionAuthIndex',
+    'profile': 'sessionAuthIndex',
 
+    'admin': 'sessionAuthAdmin',
+    'approveTeacher': 'sessionAuthAdmin',
+  },
 
   /***************************************************************************
   *                                                                          *

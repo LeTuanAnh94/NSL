@@ -1,7 +1,7 @@
 /**
  * Created by TuanAnh on 10/7/2017.
  */
-var nodemailder = require('nodemailer');
+var nodemailer = require('nodemailer');
 var EmailTemplate = require('email-templates').EmailTemplate;
 
 module.exports ={

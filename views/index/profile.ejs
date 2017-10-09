@@ -1,0 +1,158 @@
+<%- partial ('../common/index-header.ejs') %>
+<div class="container" ng-controller="myProfileCtr">
+  <div class="background-fff pd-10">
+    <div class="row">
+      <div class="col-sm-4 col-md-3 col-lg-2">
+        <input id="upload-img" type="file" accept=".png, .jpg, .jpeg" style="display: none" />
+        <div class="table-user-information-avatar" align="center">
+          <img class="avatar-image-root" alt="User Pic" src="{{user.avatar}}">
+          <div class="table-user-information-avatar-wrapper">
+            <div class="camera-upload-wrapper">
+              <i id="camera-upload" class="fa fa-camera fa-2x" ng-click="openInputFile()"></i>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="col-sm-8 col-md-9 col-lg-10">
+        <form name="editprofileform" class="validate-input" novalidate>
+          <h3 class="mg-0">Thông tin cơ bản</h3>
+          <div class="row pd-top-10">
+            <div class="col-sm-4 col-md-3 col-lg-2">
+              Họ tên đầy đủ
+            </div>
+            <div class="col-sm-7">
+              <input type="text" class="form-control" placeholder="Tên đầy đủ" ng-model="user.fullname" name="fullname" tooltip-enable="{{!editprofileform.fullname.$valid}}" tooltip-placement="top" uib-tooltip-template="'fullnameValidate.html'" ng-class="!editprofileform.fullname.$valid&&editprofileform.$submitted?'err':''" ng-required="true" ng-minlength="3" ng-maxlength="30">
+              <!-- VALIDATE fullname -->
+              <script type="text/ng-template" id="fullnameValidate.html">
+                <div ng-show="editprofileform.fullname.$error.required">Bạn phải nhập họ và tên</div>
+                <div ng-show="editprofileform.fullname.$error.minlength">Họ và tên phải lớn hơn 3 ký tự</div>
+                <div ng-show="editprofileform.fullname.$error.maxlength">Họ và tên phải nhỏ hơn 30 ký tự</div>
+              </script>
+              <!-- END -->
+            </div>
+          </div>
+          <!-- EJS -->
+          <% if (user.email != null) { %>
+          <div class="row pd-top-10">
+            <div class="col-sm-4 col-md-3 col-lg-2">
+              Email
+            </div>
+            <div class="col-sm-7">
+              <%= user.email%>
+            </div>
+          </div>
+          <%}%>
+          <!-- EJS END -->
+          <div class="row">
+            <div class="col-sm-4 col-md-3 col-lg-2">
+              Nghề nghiệp
+            </div>
+            <div class="col-sm-7">
+              <input type="text" class="form-control" placeholder="Nghề nghiệp" ng-model="user.job" name="job" tooltip-enable="{{!editprofileform.job.$valid}}" tooltip-placement="top" uib-tooltip-template="'jobValidate.html'" ng-class="!editprofileform.job.$valid&&editprofileform.$submitted?'err':''" ng-maxlength="45">
+              <!-- VALIDATE job -->
+              <script type="text/ng-template" id="jobValidate.html">
+                <div ng-show="editprofileform.job.$error.maxlength">nghề nghiệp phải nhỏ hơn 45 ký tự</div>
+              </script>
+              <!-- END -->
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-4 col-md-3 col-lg-2">
+              Giới thiệu về bản thân
+            </div>
+            <div class="col-sm-7">
+              <textarea class="form-control" rows="3" placeholder="Đôi dòng giới thiệu về bản thân bạn" ng-model="user.description" name="description" tooltip-enable="{{!editprofileform.description.$valid}}" tooltip-placement="top" uib-tooltip-template="'descriptionValidate.html'" ng-class="!editprofileform.description.$valid&&editprofileform.$submitted?'err':''" ng-maxlength="256"></textarea>
+              <!-- VALIDATE description -->
+              <script type="text/ng-template" id="descriptionValidate.html">
+                <div ng-show="editprofileform.description.$error.maxlength">nghề nghiệp phải nhỏ hơn 256 ký tự</div>
+              </script>
+              <!-- END -->
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-4 col-md-3 col-lg-2"></div>
+            <div class="col-sm-7">
+              <button class="btn btn-google w-200 pd-10 bold color-fff mg-auto mg-top-bottom-10 pull-right" ng-click="submitEdit(editprofileform.$valid)">Lưu thay đổi</button>
+            </div>
+          </div>
+        </form>
+        <div class="col-sm-7 col-sm-offset-4 col-md-offset-3 col-lg-offset-2">
+          <!-- EJS -->
+          <% if (user.role == 'member' && user.email != null) { %>
+          <a href="#" class="pull-right" data-toggle="modal" data-target="#registerTeacherModal">Đăng ký để trở thành giáo viên</a>
+          <%}%>
+          <!-- EJS END -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <% if (user.role == 'member' && user.email != null) { %>
+  <!-- Modal -->
+  <div id="registerTeacherModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title text-center">Trở thành 1 giáo viên & kiếm thật nhiều tiền</h4>
+        </div>
+        <div class="modal-body">
+          <p>Hãy làm hồ sơ của bạn thật hoàn chỉnh, hãy đưa cho chúng tôi những bằng chứng bạn là 1 người có kinh nghiệm trong lĩnh vực bạn lựa chọn giảng dạy.</p>
+          <div>
+            <h3 ng-if="user.teacherStatus == 'waiting'">
+              <label class="label label-primary">
+                Đơn của bạn đang chờ admin duyệt
+                <i class="fa fa-spinner fa-spin"></i>
+              </label>
+            </h3>
+            <h3 ng-if="user.teacherStatus == 'reject'">
+              <label class="label label-danger">
+                Đơn của bạn đã bị từ chối, hãy hoàn thiện đơn và nộp lại
+                <i class="fa fa-exclamation-triangle"></i>
+              </label>
+            </h3>
+          </div>
+          <h4>Đơn đăng ký</h4>
+          <div trumbowyg-ng
+               ng-model="user.teacherDescription"
+               ng-disabled="disabledState"
+               editor-config="{btns: ['bold','italic','insertImage','|','link']}">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" ng-click="submitTeacherDescription()">Nộp đơn</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <%}%>
+  <!-- EJS END -->
+</div>
+<!-- /.container -->
+<!--Footer -->
+<%- partial ('../common/footer.ejs') %>
+
+<!-- Modal -->
+<div class="modal fade" id="review_upload_img" aria-labelledby="modalLabel" role="dialog" tabindex="-1">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Lua chon khung hinh tren hinh anh cua ban</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span>&times;</span></button>
+      </div>
+      <div class="modal-body">
+        <div>
+          <img id="img-in-modal" class="img-responsive" src="#" alt="Picture">
+          <canvas id="crop-canvas" width="320" height="320" style="display: none"></canvas>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="cut-picture-btn" type="button" class="btn btn-primary" data-dismiss="modal">Chọn</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- EJS -->
